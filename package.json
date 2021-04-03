@@ -7,6 +7,7 @@
     "build": "vue-cli-service build",
     "preserve": "node ./scripts/init.js --dev",
     "prebuild": "node ./scripts/init.js --prd",
+    "createdVue": "node ./scripts/create-vue-common.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
