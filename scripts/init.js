@@ -8,8 +8,9 @@ const {
 
 const args = getScriptsArgs()
 const isPrd = !!args.find(arg => arg === 'prd')
-const inquirer = require('inquirer')
+
 const prompsConfig = require('./prompts')
+const inquirer = require('inquirer')
 // 引入colors 添加字符串函数劫持， 虽然没用过，但是是必须的
 const colors = require('colors')
 
@@ -40,7 +41,7 @@ async function handleInstallFile () {
 
             console.log('...正在自动设置版本号，上个版本号为' + oldVersion.yellow + '。新的版本号为' + newVersion.green)
         }
-    } 
+    }
     
     // 读取模板文件并获取模板文件内容
     const { fileContent } = readTemplateFile(installTempalteUrl, { version: newVersion })

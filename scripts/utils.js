@@ -118,6 +118,70 @@ const readDir = (url) => {
     return fs.readdirSync(resolve(url))
 }
 
+/**
+ * 创建目录和文件
+ * @param {Stirng} url 相对路径
+ * @param {String} file 
+ * @param {Boolean} isCover 文件存在时是否覆盖 默认 false
+ */
+const createDirFile = (url, file, isCover = false) => {
+    // 正确使用当前系统的路径分隔符，Unix系统是"/"，Windows系统是"\"
+
+    // 分隔符
+    const sep = path.sep
+    const { dir, base: fileName } = path.parse(resolve(url))
+    const dirs = dir.split(sep)
+    let lastDir = ''
+    // 不存在的目录
+    const unExistsDir = []
+    dirs.forEach((d, di) => {
+        if (lastDir && !fs.existsSync(lastDir)) {
+            unExistsDir.push(lastDir)
+        }
+        lastDir = lastDir + sep + dirs[di + 1]
+    })
+
+    if (unExistsDir.length) {
+        // 对不存在的目录 遍历创建
+        unExistsDir.forEach(unExistDir => {
+            fs.mkdirSync(unExistDir)
+        })
+    }
+
+    // 文件不存在
+    if (!fsIsExit(fileName) && !isCover) {
+        createFile(url, file)
+    }
+}
+
+/**
+ * 检验组件名是否为驼峰法命名
+ * @param {String} cName 
+ */
+const vaildComponentName = (cName) => {
+    return /^[A-Z][a-zA-Z]{1,}$/g.test(cName)
+}
+
+/**
+ * 转换变量名
+ * @param {*} varName 
+ * @param {*} type 1 将驼峰法转横杆  2 将横杆转驼峰法
+ */
+const transformVarName = (varName, type = 1) => {
+    if (type === 1) {
+        return varName.split(/([A-Z]){1}/).filter(word => !!word).map(word => {
+            return word.toLowerCase()
+        }).join('-')
+    }
+
+    if (type === 2) {
+        return varName.split('-').map(word => {
+            const [firstWord, ...restWord] = word.split('')
+            return firstWord.toUpperCase() + restWord.join('')
+        }).join('')
+    }
+}
+
 module.exports = {
     resolve,
     fsIsExit,
@@ -126,5 +190,8 @@ module.exports = {
     versionAutoAdd,
     vaildVersion,
     getScriptsArgs,
-    readDir
+    readDir,
+    createDirFile,
+    vaildComponentName,
+    transformVarName
 }
