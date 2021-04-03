@@ -44,7 +44,7 @@ async function handleInstallFile () {
     }
     
     // 读取模板文件并获取模板文件内容
-    const { fileContent } = readTemplateFile(installTempalteUrl, { version: newVersion })
+    const { fileContent } = readTemplateFile(installTempalteUrl, { version: newVersion }, false)
     // 初始化index.js
     createFile(initFileUrl, fileContent)
     // 对模板文件进行修改，保证模板文件的版本号是最新的
