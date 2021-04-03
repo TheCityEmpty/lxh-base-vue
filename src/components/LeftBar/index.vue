@@ -1,12 +1,12 @@
 <template>
-    <div class="$(componentClass){LeftBar}">
+    <div class="left-bar">
         <!-- todo -->
     </div>
 </template>
 
 <script>
 export default {
-    name: '$(componentName){LeftBar}'
+    name: 'LeftBar'
     // todo
 }
 </script>

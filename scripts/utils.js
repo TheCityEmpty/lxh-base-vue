@@ -32,8 +32,9 @@ const createFile = (url, blod) => {
  * 读取模板内容并按照 $(变量名){变量值} 格式来替换其中的变量或读取其中的变量
  * @param {String} url 
  * @param {String} replaceObj 传了就是替换， 否则就是读取
+ * @param {Boolean} isOld 是否产出旧的模板内容， 默认产出旧的（仅仅替换变量，模板并不变）
  */
-const readTemplateFile = (url, replaceObj) => {
+const readTemplateFile = (url, replaceObj, isOld = true) => {
     const fileStr = fs.readFileSync(resolve(url), {
         encoding: 'utf8'
     })
@@ -43,7 +44,7 @@ const readTemplateFile = (url, replaceObj) => {
         const vars = {}
         const fileContent = fileStr.replace(reg, (m, $1, $2, $3, $4) => {
             vars[$2] = replaceObj[$2] || $4
-            return `$(${$2}){${replaceObj[$2] || $4}}`
+            return isOld ? `$(${$2}){${replaceObj[$2] || $4}}` : (replaceObj[$2] || $4)
         })
 
         return { vars, fileContent }
@@ -169,9 +170,7 @@ const vaildComponentName = (cName) => {
  */
 const transformVarName = (varName, type = 1) => {
     if (type === 1) {
-        return varName.split(/([A-Z]){1}/).filter(word => !!word).map(word => {
-            return word.toLowerCase()
-        }).join('-')
+        return varName.replace(/([A-Z])/g, '-$1').toLowerCase().replace(/^\-/, '')
     }
 
     if (type === 2) {
@@ -181,6 +180,7 @@ const transformVarName = (varName, type = 1) => {
         }).join('')
     }
 }
+
 
 module.exports = {
     resolve,

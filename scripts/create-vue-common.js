@@ -1,7 +1,7 @@
 const {
     createDirFile,
     readTemplateFile,
-    
+    transformVarName
 } = require('./utils')
 
 const prompsConfig = require('./prompts')
@@ -20,7 +20,7 @@ async function init () {
 
     let fileBlob = ''
     if (vueCreatedType === 'component') {
-        const { fileContent } = readTemplateFile(templateUrlMap[vueCreatedType], { componentClass: componentName, componentName })
+        const { fileContent } = readTemplateFile(templateUrlMap[vueCreatedType], { componentClass: transformVarName(componentName), componentName }, false)
         fileBlob = fileContent
     }
 
@@ -31,7 +31,9 @@ async function init () {
     }
 
     if (fileBlob) {
+        console.log(`正在创建目录文件...`.green)
         createDirFile(createUrlMap[vueCreatedType], fileBlob)
+        console.log(`组件${componentName}创建完成，请去../src/components/${componentName}/index.vue下开始编写组件吧`.green)
     }
     
 }
