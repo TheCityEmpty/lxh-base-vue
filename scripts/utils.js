@@ -151,7 +151,7 @@ const createDirFile = (url, file, isCover = false) => {
 
     // 文件不存在
     if (!fsIsExit(fileName) && !isCover) {
-        createFile(url, file)
+        createFile(url, file || '')
     }
 }
 

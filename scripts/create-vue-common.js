@@ -17,23 +17,27 @@ const templateUrlMap = {
 
 async function init () {
     const { vueCreatedType, componentName } = await inquirer.prompt(prompsConfig.createdVueCommon)
+    const componentClassName = transformVarName(componentName)
 
     let fileBlob = ''
     if (vueCreatedType === 'component') {
-        const { fileContent } = readTemplateFile(templateUrlMap[vueCreatedType], { componentClass: transformVarName(componentName), componentName }, false)
+        const { fileContent } = readTemplateFile(templateUrlMap[vueCreatedType], { componentClass: componentClassName, componentName }, false)
         fileBlob = fileContent
     }
 
     const createUrlMap = {
-        component: `../src/components/${componentName}/index.vue`,
+        component: `../src/package/components/${componentClassName}/index.vue`,
         filter: '',
         directive: ''
     }
 
     if (fileBlob) {
         console.log(`正在创建目录文件...`.green)
+        // 创建.vue
         createDirFile(createUrlMap[vueCreatedType], fileBlob)
-        console.log(`组件${componentName}创建完成，请去../src/components/${componentName}/index.vue下开始编写组件吧`.green)
+        // 创建.lcss
+        createDirFile(`../src/package/style/${componentClassName}.css`)
+        console.log(`组件${componentName}创建完成，请去../src/package/components/${componentName}/index.vue下开始编写组件吧`.green)
     }
     
 }

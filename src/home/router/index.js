@@ -3,12 +3,13 @@ import Router from 'vue-router'
 import routes from './routes'
 Vue.use(Router)
 const router = new Router({
+  mode: 'history',
   routes
 })
 router.beforeEach((to, from, next) => {
   next()
 })
-router.afterEach(to => {
+router.afterEach(() => {
   window.scrollTo(0, 0)
 })
 

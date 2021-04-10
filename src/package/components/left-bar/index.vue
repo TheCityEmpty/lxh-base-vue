@@ -1,6 +1,7 @@
 <template>
     <div class="left-bar">
         <!-- todo -->
+        s
     </div>
 </template>
 
@@ -10,3 +11,9 @@ export default {
     // todo
 }
 </script>
+
+<style scoped>
+@import '../../style/base.css';
+@import '../../style/left-bar.css';
+</style>
+

@@ -1,8 +1,16 @@
 const {
     vaildVersion,
-    vaildComponentName
+    vaildComponentName,
+    readDir,
+    transformVarName
 } = require('../utils')
 
+
+const componentFileUrl = '../src/package/components'
+function isSameComponentName (cname) {
+    const dirs = readDir(componentFileUrl)
+    return dirs.find(dir => dir === cname)
+}
 module.exports = {
     versionHandles: [
         {
@@ -54,11 +62,9 @@ module.exports = {
                 return an.vueCreatedType === 'component'
             },
             validate: (val) => {
-                const is = vaildComponentName(val)
-                if (is) {
-                    return true
-                }
-                return '组件名请输入驼峰法！'
+                if (!vaildComponentName(val)) return '组件名请输入驼峰法！'
+                if (isSameComponentName(transformVarName(val))) return '已有该组件名字，请输入其他名字！'
+                return true
             }
         }
     ]

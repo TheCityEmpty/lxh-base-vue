@@ -10,3 +10,9 @@ export default {
     // todo
 }
 </script>
+
+<style scoped>
+@import '../../style/base.css';
+@import '../../style/$(componentClass){componentClass}.css';
+</style>
+

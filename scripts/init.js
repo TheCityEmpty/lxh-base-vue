@@ -14,7 +14,7 @@ const inquirer = require('inquirer')
 // 引入colors 添加字符串函数劫持， 虽然没用过，但是是必须的
 const colors = require('colors')
 
-const initFileUrl = '../src/components/index.js'
+const initFileUrl = '../src/package/components/index.js'
 const installTempalteUrl = './template/install-tem.js'
 const componentsEgUrl = '../src/eg'
 
