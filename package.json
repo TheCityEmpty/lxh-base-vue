@@ -8,7 +8,8 @@
     "preserve": "node ./scripts/init.js --dev",
     "prebuild": "node ./scripts/init.js --prd",
     "createdVue": "node ./scripts/create-vue-common.js",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "push": "bash ./scripts/push.sh"
   },
   "dependencies": {
     "core-js": "^3.6.5",
